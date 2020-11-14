@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btnColorBlueDark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/color_blue_dark"
+                android:background="@drawable/color_blue_dark"
+                android:contentDescription="Dark Blue" />
+            <ImageButton
+                android:id="@+id/btnColorBlackDark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/color_black_dark"
+                android:background="@drawable/color_black_dark"
+                android:contentDescription="Black" />
+            <ImageButton
+                android:id="@+id/btnColorRedDark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/color_red_dark"
+                android:background="@drawable/color_red_dark"
+                android:contentDescription="Dark Red" />
+            <ImageButton
+                android:id="@+id/btnColorGreenDark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/color_green_dark"
+                android:background="@drawable/color_green_dark"
+                android:contentDescription="Dark Green" />
+            <ImageButton
+                android:id="@+id/btnColorYellowDark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/color_yellow_dark"
+                android:background="@drawable/color_yellow_dark"
+                android:contentDescription="Dark Yellow" />
+            <ImageButton
+                android:id="@+id/btnColorPurpleDark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/color_purple_dark"
+                android:background="@drawable/color_purple_dark"
+                android:contentDescription="Dark Purple" />
+            <ImageButton
+                android:id="@+id/btnColorOrangeDark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/color_orange_dark"
+                android:background="@drawable/color_orange_dark"
+                android:contentDescription="Dark Orange" />
+            <ImageButton
+                android:id="@+id/btnColorPinkDark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/color_pink_dark"
+                android:background="@drawable/color_pink_dark"
+                android:contentDescription="Dark Pink" />
+            <ImageButton
+                android:id="@+id/btnColorGreyDark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/color_grey_dark"
+                android:background="@drawable/color_grey_dark"
+                android:contentDescription="Dark Grey" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/btnColorBlueLight"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/color_blue_light"
+            android:background="@drawable/color_blue_light"
+            android:contentDescription="Light Blue" />
+        <ImageButton
+            android:id="@+id/btnColorBlackLight"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/color_black_light"
+            android:background="@drawable/color_black_light_stroke"
+            android:contentDescription="White" />
+        <ImageButton
+            android:id="@+id/btnColorRedLight"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/color_red_light"
+            android:background="@drawable/color_red_light"
+            android:contentDescription="Light Red" />
+        <ImageButton
+            android:id="@+id/btnColorGreenLight"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/color_green_light"
+            android:background="@drawable/color_green_light"
+            android:contentDescription="Light Green" />
+        <ImageButton
+            android:id="@+id/btnColorYellowLight"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/color_yellow_light"
+            android:background="@drawable/color_yellow_light"
+            android:contentDescription="Light Yellow" />
+        <ImageButton
+            android:id="@+id/btnColorPurpleLight"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/color_purple_light"
+            android:background="@drawable/color_purple_light"
+            android:contentDescription="Light Purple" />
+        <ImageButton
+            android:id="@+id/btnColorOrangeLight"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/color_orange_light"
+            android:background="@drawable/color_orange_light"
+            android:contentDescription="Light Orange" />
+        <ImageButton
+            android:id="@+id/btnColorPinkLight"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/color_pink_light"
+            android:background="@drawable/color_pink_light"
+            android:contentDescription="Light Pink" />
+        <ImageButton
+            android:id="@+id/btnColorGreyLight"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/color_grey_light"
+            android:background="@drawable/color_grey_light"
+            android:contentDescription="Light Grey" />
+
+        </LinearLayout>
+    </LinearLayout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <ImageButton
+        android:id="@+id/ibExtraSmallBrushSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Extra Small brush size"
+        android:src="@drawable/extra_small"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ibSmallBrushSize"/>
+
+    <ImageButton
+        android:id="@+id/ibSmallBrushSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Small brush size"
+        android:src="@drawable/small"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@id/ibExtraSmallBrushSize"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ibMediumBrushSize"/>
+
+    <ImageButton
+        android:id="@+id/ibMediumBrushSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Medium brush size"
+        android:src="@drawable/medium"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@id/ibSmallBrushSize"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ibLargeBrushSize"/>
+
+    <ImageButton
+        android:id="@+id/ibLargeBrushSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Large brush size"
+        android:src="@drawable/large"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@id/ibMediumBrushSize"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ibExtraLargeBrushSize"/>
+
+    <ImageButton
+        android:id="@+id/ibExtraLargeBrushSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Extra Large brush size"
+        android:src="@drawable/extra_large"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@id/ibLargeBrushSize"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
