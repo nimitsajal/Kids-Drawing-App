@@ -13,10 +13,12 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_brush_size.*
 import kotlinx.android.synthetic.main.dialog_colors.*
@@ -122,7 +124,7 @@ class MainActivity : AppCompatActivity() {
 
         ibSave.setOnClickListener{
             if(isReadStorageAllowed()){
-                saveImageToStorage(getBitmapFromView(drawingView))
+                saveImageToStorage(getBitmapFromView(drawingView), StringBuilder(""))
             }
             else{
                 requestStoragePermission()
@@ -539,77 +541,111 @@ class MainActivity : AppCompatActivity() {
         return returnedBitmap
     }
 
-    private fun saveImageToStorage(mBitmap: Bitmap){
-        val externalStorage = Environment.getExternalStorageState()
-        if(externalStorage == Environment.MEDIA_MOUNTED){
-            val storageDirectory = Environment.getExternalStorageDirectory().absolutePath
-            val dir = File("${storageDirectory}/DrawingApp")
-            val created = dir.mkdirs()
-            //Toast.makeText(this, "$created", Toast.LENGTH_SHORT).show()
-            val filename = String.format("%d.png", System.currentTimeMillis())
-            val outFile = File(dir.toString() + File.separator + "DrawingApp_" + System.currentTimeMillis()/1000 + ".jpg")
-            //Toast.makeText(this, "Image location -> ${Uri.parse(outFile.absolutePath)}", Toast.LENGTH_SHORT).show()
-            //val file = File(storageDirectory + File.separator + "DrawingApp_" + System.currentTimeMillis()/1000 + ".jpg")
-            try{
-                val stream:OutputStream = FileOutputStream(outFile)
-                //Toast.makeText(this, "reached till here", Toast.LENGTH_SHORT).show()
+//    private fun saveImageToStorage(mBitmap: Bitmap){
+//        val externalStorage = Environment.getExternalStorageState()
+//        if(externalStorage == Environment.MEDIA_MOUNTED){
+//            val storageDirectory = Environment.getExternalStorageDirectory().absolutePath
+//            val dir = File("${storageDirectory}/DrawingApp")
+//            val created = dir.mkdirs()
+//            //Toast.makeText(this, "$created", Toast.LENGTH_SHORT).show()
+//            val filename = String.format("%d.png", System.currentTimeMillis())
+//            val outFile = File(dir.toString() + File.separator + "DrawingApp_" + System.currentTimeMillis()/1000 + ".jpg")
+//            //Toast.makeText(this, "Image location -> ${Uri.parse(outFile.absolutePath)}", Toast.LENGTH_SHORT).show()
+//            //val file = File(storageDirectory + File.separator + "DrawingApp_" + System.currentTimeMillis()/1000 + ".jpg")
+//            try{
+//                val stream:OutputStream = FileOutputStream(outFile)
+//                //Toast.makeText(this, "reached till here", Toast.LENGTH_SHORT).show()
+//                mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+//                stream.flush()
+//                stream.close()
+//                Toast.makeText(this, "Image saved successfully at ${Uri.parse(outFile.absolutePath)}", Toast.LENGTH_SHORT).show()
+//            }
+//            catch(e:java.lang.Exception){
+//                e.printStackTrace()
+//                Toast.makeText(this, "There is some problem", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//        else{
+//            Toast.makeText(this, "Unable, to access storage", Toast.LENGTH_SHORT).show()
+//        }
+//    }
+
+    private fun saveImageToStorage(mBitmap: Bitmap, result: StringBuilder) {
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        if (storageDir != null) {
+            val timestamp = System.currentTimeMillis()
+            val fileName = "DrawingApp_$timestamp.jpg"
+            val file = File(storageDir, fileName)
+
+            try {
+                val stream: OutputStream = FileOutputStream(file)
                 mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
                 stream.flush()
                 stream.close()
-                Toast.makeText(this, "Image saved successfully at ${Uri.parse(outFile.absolutePath)}", Toast.LENGTH_SHORT).show()
-            }
-            catch(e:java.lang.Exception){
+                result.clear()
+                result.append(file.absolutePath)
+                Toast.makeText(this, "Image saved successfully at ${file.absolutePath}", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(this, "There is some problem", Toast.LENGTH_SHORT).show()
             }
-        }
-        else{
-            Toast.makeText(this, "Unable, to access storage", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "External storage is not available.", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun shareImage(mBitmap: Bitmap){
-        var result = ""
-        val externalStorage = Environment.getExternalStorageState()
-        if(externalStorage == Environment.MEDIA_MOUNTED){
-            val storageDirectory = Environment.getExternalStorageDirectory().absolutePath
-            val dir = File("${storageDirectory}/DrawingApp")
-            val created = dir.mkdirs()
-            //Toast.makeText(this, "$created", Toast.LENGTH_SHORT).show()
-            val filename = String.format("%d.png", System.currentTimeMillis())
-            val outFile = File(dir.toString() + File.separator + "DrawingApp_" + System.currentTimeMillis()/1000 + ".jpg")
-            //Toast.makeText(this, "Image location -> ${Uri.parse(outFile.absolutePath)}", Toast.LENGTH_SHORT).show()
-            //val file = File(storageDirectory + File.separator + "DrawingApp_" + System.currentTimeMillis()/1000 + ".jpg")
-            try{
-                val stream:OutputStream = FileOutputStream(outFile)
-                //Toast.makeText(this, "reached till here", Toast.LENGTH_SHORT).show()
-                mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-                stream.flush()
-                stream.close()
-                Toast.makeText(this, "Image saved successfully at ${Uri.parse(outFile.absolutePath)}", Toast.LENGTH_SHORT).show()
-                result = outFile.absolutePath
-            }
-            catch(e:java.lang.Exception){
-                e.printStackTrace()
-                Toast.makeText(this, "There is some problem", Toast.LENGTH_SHORT).show()
-            }
-        }
-        else{
-            Toast.makeText(this, "Unable, to access storage", Toast.LENGTH_SHORT).show()
-        }
-        if(result != ""){
-            MediaScannerConnection.scanFile(this@MainActivity, arrayOf(result), null){
-                    path, uri -> val shareIntent = Intent()
-                    shareIntent.action = Intent.ACTION_SEND
-                    shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-                    shareIntent.type = "image/jpeg"
-                    startActivity(Intent.createChooser(shareIntent, "Share"))
-            }
-        }
-        else{
-            Toast.makeText(this, "Cannot share", Toast.LENGTH_SHORT).show()
-        }
+    private fun shareImage(mBitmap: Bitmap) {
+        val uri: Uri = generateImageUri(mBitmap)
+
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        shareIntent.type = "image/jpeg"
+        startActivity(Intent.createChooser(shareIntent, "Share"))
     }
+
+    private fun generateImageUri(mBitmap: Bitmap): Uri {
+        val cacheDir = getExternalCacheDir()
+        val file = File(cacheDir, "shared_image.jpg")
+
+        try {
+            val stream: OutputStream = FileOutputStream(file)
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            stream.flush()
+            stream.close()
+        } catch (e: Exception) {
+            Log.e("ShareImage", "Failed to generate image URI: ${e.message}")
+            return Uri.EMPTY
+        }
+
+        return FileProvider.getUriForFile(this, "com.nimitsajal.drawingapp.fileprovider", file)
+    }
+
+
+//    private fun shareImage(mBitmap: Bitmap) {
+//        var filePathBuilder: StringBuilder = StringBuilder("")
+//        saveImageToStorage(mBitmap, filePathBuilder)
+//        val filePath: String = filePathBuilder.toString()
+//        if (filePath != "") {
+//            try {
+//                MediaScannerConnection.scanFile(this@MainActivity, arrayOf(filePath), null) { _, uri ->
+//
+//                        val shareIntent = Intent()
+//                        shareIntent.action = Intent.ACTION_SEND
+//                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+//                        shareIntent.type = "image/jpeg"
+//                        startActivity(Intent.createChooser(shareIntent, "Share"))
+//
+//                }
+//            } catch (e: Exception) {
+//                Log.e("ShareImage", "Sharing failed: ${e.message}")
+//                Toast.makeText(this, "Sharing failed, please try again", Toast.LENGTH_SHORT).show()
+//            }
+//        } else {
+//            Toast.makeText(this, "Cannot share", Toast.LENGTH_SHORT).show()
+//        }
+//    }
+
 
 //    @SuppressLint("StaticFieldLeak")
 //    private inner class BitmapAsyncTask(val mBitmap: Bitmap): AsyncTask<Any, Void, String>(){
