@@ -1,92 +1,94 @@
 package com.nimitsajal.drawingapp
 
 import android.Manifest
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.media.MediaScannerConnection
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dialog_brush_size.*
-import kotlinx.android.synthetic.main.dialog_colors.*
+import com.nimitsajal.drawingapp.databinding.ActivityMainBinding
+import com.nimitsajal.drawingapp.databinding.DialogBackgroundColorBinding
+import com.nimitsajal.drawingapp.databinding.DialogBrushSizeBinding
+import com.nimitsajal.drawingapp.databinding.DialogColorsBinding
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
-import kotlin.Exception
 
 class MainActivity : AppCompatActivity() {
     var eraserColor: String = "BlackLight"
     var brushColor: String = "BlackDark"
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        drawingView.setBrushSize(8.toFloat())
+        binding.drawingView.setBrushSize(8.toFloat())
 
-        ibBrush.setOnClickListener{
+        binding.ibBrush.setOnClickListener{
             showBrushSizeChooserDialog()
         }
 
-        ibEraser.setOnClickListener{
+        binding.ibEraser.setOnClickListener{
             when(eraserColor){
-                "BlueDark" -> drawingView.setBrushColor("#00008b")
-                "BlueLight" -> drawingView.setBrushColor("#add8e6")
-                "BlackDark" -> drawingView.setBrushColor("#000000")
-                "BlackLight" -> drawingView.setBrushColor("#ffffff")
-                "RedDark" -> drawingView.setBrushColor("#8b0000")
-                "RedLight" -> drawingView.setBrushColor("#ff0000")
-                "GreenDark" -> drawingView.setBrushColor("#013220")
-                "GreenLight" -> drawingView.setBrushColor("#90ee90")
-                "PinkDark" -> drawingView.setBrushColor("#d11d53")
-                "PinkLight" -> drawingView.setBrushColor("#ffb6c1")
-                "PurpleDark" -> drawingView.setBrushColor("#800080")
-                "PurpleLight" -> drawingView.setBrushColor("#cd00cd")
-                "YellowDark" -> drawingView.setBrushColor("#ff9500")
-                "YellowLight" -> drawingView.setBrushColor("#fff44f")
-                "OrangeDark" -> drawingView.setBrushColor("#ff4c00")
-                "OrangeLight" -> drawingView.setBrushColor("#ff9b1a")
-                "GreyDark" -> drawingView.setBrushColor("#2f4f4f")
-                "GreyLight" -> drawingView.setBrushColor("#d3d3d3")
+                "BlueDark" -> binding.drawingView.setBrushColor("#00008b")
+                "BlueLight" -> binding.drawingView.setBrushColor("#add8e6")
+                "BlackDark" -> binding.drawingView.setBrushColor("#000000")
+                "BlackLight" -> binding.drawingView.setBrushColor("#ffffff")
+                "RedDark" -> binding.drawingView.setBrushColor("#8b0000")
+                "RedLight" -> binding.drawingView.setBrushColor("#ff0000")
+                "GreenDark" -> binding.drawingView.setBrushColor("#013220")
+                "GreenLight" -> binding.drawingView.setBrushColor("#90ee90")
+                "PinkDark" -> binding.drawingView.setBrushColor("#d11d53")
+                "PinkLight" -> binding.drawingView.setBrushColor("#ffb6c1")
+                "PurpleDark" -> binding.drawingView.setBrushColor("#800080")
+                "PurpleLight" -> binding.drawingView.setBrushColor("#cd00cd")
+                "YellowDark" -> binding.drawingView.setBrushColor("#ff9500")
+                "YellowLight" -> binding.drawingView.setBrushColor("#fff44f")
+                "OrangeDark" -> binding.drawingView.setBrushColor("#ff4c00")
+                "OrangeLight" -> binding.drawingView.setBrushColor("#ff9b1a")
+                "GreyDark" -> binding.drawingView.setBrushColor("#2f4f4f")
+                "GreyLight" -> binding.drawingView.setBrushColor("#d3d3d3")
             }
         }
 
-        ibPencil.setOnClickListener{
+        binding.ibPencil.setOnClickListener{
             when(brushColor){
-                "BlueDark" -> drawingView.setBrushColor("#00008b")
-                "BlueLight" -> drawingView.setBrushColor("#add8e6")
-                "BlackDark" -> drawingView.setBrushColor("#000000")
-                "BlackLight" -> drawingView.setBrushColor("#ffffff")
-                "RedDark" -> drawingView.setBrushColor("#8b0000")
-                "RedLight" -> drawingView.setBrushColor("#ff0000")
-                "GreenDark" -> drawingView.setBrushColor("#013220")
-                "GreenLight" -> drawingView.setBrushColor("#90ee90")
-                "PinkDark" -> drawingView.setBrushColor("#d11d53")
-                "PinkLight" -> drawingView.setBrushColor("#ffb6c1")
-                "PurpleDark" -> drawingView.setBrushColor("#800080")
-                "PurpleLight" -> drawingView.setBrushColor("#cd00cd")
-                "YellowDark" -> drawingView.setBrushColor("#ff9500")
-                "YellowLight" -> drawingView.setBrushColor("#fff44f")
-                "OrangeDark" -> drawingView.setBrushColor("#ff4c00")
-                "OrangeLight" -> drawingView.setBrushColor("#ff9b1a")
-                "GreyDark" -> drawingView.setBrushColor("#2f4f4f")
-                "GreyLight" -> drawingView.setBrushColor("#d3d3d3")
+                "BlueDark" -> binding.drawingView.setBrushColor("#00008b")
+                "BlueLight" -> binding.drawingView.setBrushColor("#add8e6")
+                "BlackDark" -> binding.drawingView.setBrushColor("#000000")
+                "BlackLight" -> binding.drawingView.setBrushColor("#ffffff")
+                "RedDark" -> binding.drawingView.setBrushColor("#8b0000")
+                "RedLight" -> binding.drawingView.setBrushColor("#ff0000")
+                "GreenDark" -> binding.drawingView.setBrushColor("#013220")
+                "GreenLight" -> binding.drawingView.setBrushColor("#90ee90")
+                "PinkDark" -> binding.drawingView.setBrushColor("#d11d53")
+                "PinkLight" -> binding.drawingView.setBrushColor("#ffb6c1")
+                "PurpleDark" -> binding.drawingView.setBrushColor("#800080")
+                "PurpleLight" -> binding.drawingView.setBrushColor("#cd00cd")
+                "YellowDark" -> binding.drawingView.setBrushColor("#ff9500")
+                "YellowLight" -> binding.drawingView.setBrushColor("#fff44f")
+                "OrangeDark" -> binding.drawingView.setBrushColor("#ff4c00")
+                "OrangeLight" -> binding.drawingView.setBrushColor("#ff9b1a")
+                "GreyDark" -> binding.drawingView.setBrushColor("#2f4f4f")
+                "GreyLight" -> binding.drawingView.setBrushColor("#d3d3d3")
             }
         }
 
-        ibImport.setOnClickListener{
+        binding.ibImport.setOnClickListener{
 //            if(isReadStorageAllowed()){
 //                val pickPhotoIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 //            startActivityForResult(pickPhotoIntent, GALLERY)
@@ -98,52 +100,52 @@ class MainActivity : AppCompatActivity() {
             showBackgroundChooserDialog()
         }
 
-        ibUndo.setOnClickListener{
-            drawingView.onClickUndo()
+        binding.ibUndo.setOnClickListener{
+            binding.drawingView.onClickUndo()
         }
 
-        ibRedo.setOnClickListener{
-            drawingView.onClickRedo()
+        binding.ibRedo.setOnClickListener{
+            binding.drawingView.onClickRedo()
         }
 
-        ibEraseAll.setOnClickListener{
-            drawingView.onClickClear()
-            ivBackground.setBackgroundColor(Color.parseColor("#ffffff"))
+        binding.ibEraseAll.setOnClickListener{
+            binding.drawingView.onClickClear()
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#ffffff"))
             eraserColor = "BlackLight"
             brushColor = "BlackDark"
         }
 
-        ibShare.setOnClickListener{
+        binding.ibShare.setOnClickListener{
             if(isReadStorageAllowed()){
-                shareImage(getBitmapFromView(drawingView))
+                shareImage(getBitmapFromView(binding.drawingView))
             }
             else{
                 requestStoragePermission()
             }
         }
 
-        ibSave.setOnClickListener{
+        binding.ibSave.setOnClickListener{
             if(isReadStorageAllowed()){
-                saveImageToStorage(getBitmapFromView(drawingView), StringBuilder(""))
+                saveImageToStorage(getBitmapFromView(binding.drawingView), StringBuilder(""))
             }
             else{
                 requestStoragePermission()
             }
         }
 
-        ibColor.setOnClickListener{
+        binding.ibColor.setOnClickListener{
             showColorChooserDialog()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK){
+        if(resultCode == RESULT_OK){
             if(requestCode == GALLERY){
               try{
                   if(data!!.data != null){
-                      ivBackground.visibility = View.VISIBLE
-                      ivBackground.setImageURI(data.data)
+                      binding.ivBackground.visibility = View.VISIBLE
+                      binding.ivBackground.setImageURI(data.data)
                   }
                   else{
                       Toast.makeText(this, "Error in importing the image.", Toast.LENGTH_SHORT).show()
@@ -158,134 +160,135 @@ class MainActivity : AppCompatActivity() {
 
     fun showBackgroundChooserDialog(){
         val backgroundColorDialog = Dialog(this)
-        backgroundColorDialog.setContentView(R.layout.dialog_background_color)
+        val dialogBinding = DialogBackgroundColorBinding.inflate(layoutInflater)
+        backgroundColorDialog.setContentView(dialogBinding.root)
         backgroundColorDialog.setTitle("Brush Size: ")
 
-        val blueDark = backgroundColorDialog.btnColorBlueDark
-        val blueLight = backgroundColorDialog.btnColorBlueLight
-        val blackDark = backgroundColorDialog.btnColorBlackDark
-        val blackLight = backgroundColorDialog.btnColorBlackLight
-        val redDark = backgroundColorDialog.btnColorRedDark
-        val redLight = backgroundColorDialog.btnColorRedLight
-        val greenDark = backgroundColorDialog.btnColorGreenDark
-        val greenLight = backgroundColorDialog.btnColorGreenLight
-        val pinkDark = backgroundColorDialog.btnColorPinkDark
-        val pinkLight = backgroundColorDialog.btnColorPinkLight
-        val purpleDark = backgroundColorDialog.btnColorPurpleDark
-        val purpleLight = backgroundColorDialog.btnColorPurpleLight
-        val yellowDark = backgroundColorDialog.btnColorYellowDark
-        val yellowLight = backgroundColorDialog.btnColorYellowLight
-        val orangeDark = backgroundColorDialog.btnColorOrangeDark
-        val orangeLight = backgroundColorDialog.btnColorOrangeLight
-        val greyDark = backgroundColorDialog.btnColorGreyDark
-        val greyLight = backgroundColorDialog.btnColorGreyLight
+        val blueDark = dialogBinding.btnColorBlueDark
+        val blueLight = dialogBinding.btnColorBlueLight
+        val blackDark = dialogBinding.btnColorBlackDark
+        val blackLight = dialogBinding.btnColorBlackLight
+        val redDark = dialogBinding.btnColorRedDark
+        val redLight = dialogBinding.btnColorRedLight
+        val greenDark = dialogBinding.btnColorGreenDark
+        val greenLight = dialogBinding.btnColorGreenLight
+        val pinkDark = dialogBinding.btnColorPinkDark
+        val pinkLight = dialogBinding.btnColorPinkLight
+        val purpleDark = dialogBinding.btnColorPurpleDark
+        val purpleLight = dialogBinding.btnColorPurpleLight
+        val yellowDark = dialogBinding.btnColorYellowDark
+        val yellowLight = dialogBinding.btnColorYellowLight
+        val orangeDark = dialogBinding.btnColorOrangeDark
+        val orangeLight = dialogBinding.btnColorOrangeLight
+        val greyDark = dialogBinding.btnColorGreyDark
+        val greyLight = dialogBinding.btnColorGreyLight
 
         blueDark.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#00008b"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#00008b"))
             eraserColor = "BlueDark"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         blueLight.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#add8e6"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#add8e6"))
             eraserColor = "BlueLight"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         blackDark.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#000000"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#000000"))
             eraserColor = "BlackDark"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         blackLight.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#ffffff"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#ffffff"))
             eraserColor = "BlackLight"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         redDark.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#8b0000"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#8b0000"))
             eraserColor = "RedDark"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         redLight.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#ff0000"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#ff0000"))
             eraserColor = "RedLight"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         greenDark.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#013220"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#013220"))
             eraserColor = "GreenDark"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         greenLight.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#90ee90"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#90ee90"))
             eraserColor = "#GreenLight"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         pinkDark.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#d11d53"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#d11d53"))
             eraserColor = "PinkDark"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         pinkLight.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#ffb6c1"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#ffb6c1"))
             eraserColor = "PinkLight"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         purpleDark.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#800080"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#800080"))
             eraserColor = "PurpleDark"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         purpleLight.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#cd00cd"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#cd00cd"))
             eraserColor = "PurpleLight"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         yellowDark.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#ff9500"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#ff9500"))
             eraserColor = "YellowDark"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         yellowLight.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#fff44f"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#fff44f"))
             eraserColor = "YellowLight"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         orangeDark.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#ff4c00"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#ff4c00"))
             eraserColor = "OrangeDark"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         orangeLight.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#ff9b1a"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#ff9b1a"))
             eraserColor = "OrangeLight"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         greyDark.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#2f4f4f"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#2f4f4f"))
             eraserColor = "GreyDark"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         greyLight.setOnClickListener{
-            ivBackground.setBackgroundColor(Color.parseColor("#d3d3d3"))
+            binding.ivBackground.setBackgroundColor(Color.parseColor("#d3d3d3"))
             eraserColor = "GreyLight"
-            drawingView.onClickClear()
+            binding.drawingView.onClickClear()
             backgroundColorDialog.dismiss()
         }
         backgroundColorDialog.show()
@@ -293,115 +296,116 @@ class MainActivity : AppCompatActivity() {
 
     fun showColorChooserDialog(){
         val colorDialog = Dialog(this)
-        colorDialog.setContentView(R.layout.dialog_colors)
+        val dialogBinding = DialogColorsBinding.inflate(layoutInflater)
+        colorDialog.setContentView(dialogBinding.root)
         colorDialog.setTitle("Colors: ")
 
-        val blueDark = colorDialog.btnColorBlueDark
-        val blueLight = colorDialog.btnColorBlueLight
-        val blackDark = colorDialog.btnColorBlackDark
-        val blackLight = colorDialog.btnColorBlackLight
-        val redDark = colorDialog.btnColorRedDark
-        val redLight = colorDialog.btnColorRedLight
-        val greenDark = colorDialog.btnColorGreenDark
-        val greenLight = colorDialog.btnColorGreenLight
-        val pinkDark = colorDialog.btnColorPinkDark
-        val pinkLight = colorDialog.btnColorPinkLight
-        val purpleDark = colorDialog.btnColorPurpleDark
-        val purpleLight = colorDialog.btnColorPurpleLight
-        val yellowDark = colorDialog.btnColorYellowDark
-        val yellowLight = colorDialog.btnColorYellowLight
-        val orangeDark = colorDialog.btnColorOrangeDark
-        val orangeLight = colorDialog.btnColorOrangeLight
-        val greyDark = colorDialog.btnColorGreyDark
-        val greyLight = colorDialog.btnColorGreyLight
+        val blueDark = dialogBinding.btnColorBlueDark
+        val blueLight = dialogBinding.btnColorBlueLight
+        val blackDark = dialogBinding.btnColorBlackDark
+        val blackLight = dialogBinding.btnColorBlackLight
+        val redDark = dialogBinding.btnColorRedDark
+        val redLight = dialogBinding.btnColorRedLight
+        val greenDark = dialogBinding.btnColorGreenDark
+        val greenLight = dialogBinding.btnColorGreenLight
+        val pinkDark = dialogBinding.btnColorPinkDark
+        val pinkLight = dialogBinding.btnColorPinkLight
+        val purpleDark = dialogBinding.btnColorPurpleDark
+        val purpleLight = dialogBinding.btnColorPurpleLight
+        val yellowDark = dialogBinding.btnColorYellowDark
+        val yellowLight = dialogBinding.btnColorYellowLight
+        val orangeDark = dialogBinding.btnColorOrangeDark
+        val orangeLight = dialogBinding.btnColorOrangeLight
+        val greyDark = dialogBinding.btnColorGreyDark
+        val greyLight = dialogBinding.btnColorGreyLight
 
         blueDark.setOnClickListener{
-            drawingView.setBrushColor("#00008b")
+            binding.drawingView.setBrushColor("#00008b")
             brushColor = "BlueDark"
             colorDialog.dismiss()
         }
         blueLight.setOnClickListener{
-            drawingView.setBrushColor("#add8e6")
+            binding.drawingView.setBrushColor("#add8e6")
             brushColor = "BlueLight"
             colorDialog.dismiss()
         }
         blackDark.setOnClickListener{
-            drawingView.setBrushColor("#000000")
+            binding.drawingView.setBrushColor("#000000")
             brushColor = "BlackDark"
             colorDialog.dismiss()
         }
         blackLight.setOnClickListener{
-            drawingView.setBrushColor("#ffffff")
+            binding.drawingView.setBrushColor("#ffffff")
             brushColor = "BlackLight"
             colorDialog.dismiss()
         }
         redDark.setOnClickListener{
-            drawingView.setBrushColor("#8b0000")
+            binding.drawingView.setBrushColor("#8b0000")
             brushColor = "RedDark"
             colorDialog.dismiss()
         }
         redLight.setOnClickListener{
-            drawingView.setBrushColor("#ff0000")
+            binding.drawingView.setBrushColor("#ff0000")
             brushColor = "RedLight"
             colorDialog.dismiss()
         }
         greenDark.setOnClickListener{
-            drawingView.setBrushColor("#013220")
+            binding.drawingView.setBrushColor("#013220")
             brushColor = "GreenDark"
             colorDialog.dismiss()
         }
         greenLight.setOnClickListener{
-            drawingView.setBrushColor("#90ee90")
+            binding.drawingView.setBrushColor("#90ee90")
             brushColor = "GreenLight"
             colorDialog.dismiss()
         }
         pinkDark.setOnClickListener{
-            drawingView.setBrushColor("#d11d53")
+            binding.drawingView.setBrushColor("#d11d53")
             brushColor = "PinkDark"
             colorDialog.dismiss()
         }
         pinkLight.setOnClickListener{
-            drawingView.setBrushColor("#ffb6c1")
+            binding.drawingView.setBrushColor("#ffb6c1")
             brushColor = "PinkLight"
             colorDialog.dismiss()
         }
         purpleDark.setOnClickListener{
-            drawingView.setBrushColor("#800080")
+            binding.drawingView.setBrushColor("#800080")
             brushColor = "PurpleDark"
             colorDialog.dismiss()
         }
         purpleLight.setOnClickListener{
-            drawingView.setBrushColor("#cd00cd")
+            binding.drawingView.setBrushColor("#cd00cd")
             brushColor = "PurpleLight"
             colorDialog.dismiss()
         }
         yellowDark.setOnClickListener{
-            drawingView.setBrushColor("#ff9500")
+            binding.drawingView.setBrushColor("#ff9500")
             brushColor = "YellowDark"
             colorDialog.dismiss()
         }
         yellowLight.setOnClickListener{
-            drawingView.setBrushColor("#fff44f")
+            binding.drawingView.setBrushColor("#fff44f")
             brushColor = "YellowLight"
             colorDialog.dismiss()
         }
         orangeDark.setOnClickListener{
-            drawingView.setBrushColor("#ff4c00")
+            binding.drawingView.setBrushColor("#ff4c00")
             brushColor = "OrangeDark"
             colorDialog.dismiss()
         }
         orangeLight.setOnClickListener{
-            drawingView.setBrushColor("#ff9b1a")
+            binding.drawingView.setBrushColor("#ff9b1a")
             brushColor = "OrangeLight"
             colorDialog.dismiss()
         }
         greyDark.setOnClickListener{
-            drawingView.setBrushColor("#2f4f4f")
+            binding.drawingView.setBrushColor("#2f4f4f")
             brushColor = "GreyDark"
             colorDialog.dismiss()
         }
         greyLight.setOnClickListener{
-            drawingView.setBrushColor("#d3d3d3")
+            binding.drawingView.setBrushColor("#d3d3d3")
             brushColor = "GreyLight"
             colorDialog.dismiss()
         }
@@ -410,31 +414,32 @@ class MainActivity : AppCompatActivity() {
 
     private fun showBrushSizeChooserDialog(){
         val brushDialog = Dialog(this)
-        brushDialog.setContentView(R.layout.dialog_brush_size)
+        val dialogBinding = DialogBrushSizeBinding.inflate(layoutInflater)
+        brushDialog.setContentView(dialogBinding.root)
         brushDialog.setTitle("Brush Size: ")
-        val extraSmallBtn = brushDialog.ibExtraSmallBrushSize
-        val smallBtn = brushDialog.ibSmallBrushSize
-        val mediumBtn = brushDialog.ibMediumBrushSize
-        val largeBtn = brushDialog.ibLargeBrushSize
-        val extraLargeBtn = brushDialog.ibExtraLargeBrushSize
+        val extraSmallBtn = dialogBinding.ibExtraSmallBrushSize
+        val smallBtn = dialogBinding.ibSmallBrushSize
+        val mediumBtn = dialogBinding.ibMediumBrushSize
+        val largeBtn = dialogBinding.ibLargeBrushSize
+        val extraLargeBtn = dialogBinding.ibExtraLargeBrushSize
         extraSmallBtn.setOnClickListener{
-            drawingView.setBrushSize(2.toFloat())
+            binding.drawingView.setBrushSize(2.toFloat())
             brushDialog.dismiss()
         }
         smallBtn.setOnClickListener{
-            drawingView.setBrushSize(6.toFloat())
+            binding.drawingView.setBrushSize(6.toFloat())
             brushDialog.dismiss()
         }
         mediumBtn.setOnClickListener{
-            drawingView.setBrushSize(14.toFloat())
+            binding.drawingView.setBrushSize(14.toFloat())
             brushDialog.dismiss()
         }
         largeBtn.setOnClickListener{
-            drawingView.setBrushSize(24.toFloat())
+            binding.drawingView.setBrushSize(24.toFloat())
             brushDialog.dismiss()
         }
         extraLargeBtn.setOnClickListener{
-            drawingView.setBrushSize(32.toFloat())
+            binding.drawingView.setBrushSize(32.toFloat())
             brushDialog.dismiss()
         }
         brushDialog.show()
