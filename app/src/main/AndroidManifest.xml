@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     
     <application
+        android:name="com.nimitsajal.drawingapp.OpenAd"
         android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,14 +16,17 @@
         <activity
             android:name="com.nimitsajal.drawingapp.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6377531315503643~7720029145"/>
+
         <provider
             android:authorities="com.nimitsajal.drawingapp.fileprovider"
             android:name="androidx.core.content.FileProvider"

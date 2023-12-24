@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.google.android.gms.ads.MobileAds
 import com.nimitsajal.drawingapp.databinding.ActivityMainBinding
 import com.nimitsajal.drawingapp.databinding.DialogBackgroundColorBinding
 import com.nimitsajal.drawingapp.databinding.DialogBrushSizeBinding
@@ -35,6 +36,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Log.d("OpenAd", "MainActivity class onCreate started")
+
+        MobileAds.initialize(this) {}
 
         binding.drawingView.setBrushSize(8.toFloat())
 
